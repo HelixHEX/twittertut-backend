@@ -133,7 +133,7 @@ router.get('/login', function (req, res) { return __awaiter(void 0, void 0, void
                     res.json({ password: 'Incorrect Username/Password' }).status(404);
                 }
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " has created an account");
-                res.json({ success: true }).status(200);
+                res.json({ success: true, uuid: user === null || user === void 0 ? void 0 : user.uuid }).status(200);
                 return [2];
         }
     });
