@@ -126,7 +126,7 @@ router.get("/login", async (req: express.Request, res: express.Response) => {
   }
 
   //log user has logged in
-  console.log(`${user?.username} has created an account`);
+  console.log(`${user?.username} has logged`);
 
   //send success
   res.json({ success: true, uuid: user?.uuid }).status(200);
