@@ -56,7 +56,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
             case 0: return [4, typeorm_1.createConnection({
                     type: "postgres",
                     url: process.env.DATABASE_URL,
-                    logging: true,
+                    logging: false,
                     synchronize: true,
                     migrations: [path.join(__dirname, "./migrations/*")],
                     entities: [Tweet_1["default"], User_1["default"]]
