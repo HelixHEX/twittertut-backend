@@ -50,6 +50,7 @@ var User_1 = __importDefault(require("./entities/User"));
 var user = require("./routes/user");
 var tweets = require("./routes/tweets");
 var cron_1 = __importDefault(require("cron"));
+var node_fetch_1 = __importDefault(require("node-fetch"));
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var app, cronJob;
     return __generator(this, function (_a) {
@@ -75,7 +76,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                     res.status(404).json({ status: "404" });
                 });
                 cronJob = new cron_1["default"].CronJob('0 */25 * * * *', function () {
-                    fetch('https://twitter-tut-api.herokuapp.com/')
+                    node_fetch_1["default"]('https://twitter-tut-api.herokuapp.com/')
                         .then(function (res) { return console.log("response-ok: " + res.ok + ", status: " + res.status); })["catch"](function (error) { return console.log(error); });
                 });
                 cronJob.start();

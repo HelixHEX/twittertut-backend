@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "fetch": "^1.1.0",
     "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.0.0",
