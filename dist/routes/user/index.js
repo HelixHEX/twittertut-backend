@@ -44,7 +44,7 @@ var User_1 = __importDefault(require("../../entities/User"));
 var router = express_1["default"].Router();
 var argon2_1 = __importDefault(require("argon2"));
 var user_1 = require("../../utils/user");
-router.get('/me', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.get("/me", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, uuid, isloggedin, user;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -53,18 +53,18 @@ router.get('/me', function (req, res) { return __awaiter(void 0, void 0, void 0,
                 uuid = query.currentUser;
                 isloggedin = query.isLoggedIn;
                 user_1.isLoggedIn(isloggedin, uuid, res);
-                return [4, User_1["default"].findOne({ relations: ['tweets'], where: { uuid: uuid } })];
+                return [4, User_1["default"].findOne({ relations: ["tweets"], where: { uuid: uuid } })];
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    res.json({ uuid: 'user not found' }).status(404);
+                    res.json({ uuid: "user not found" }).status(404);
                 }
                 res.json({ user: user }).status(200);
                 return [2];
         }
     });
 }); });
-router.get('/signup', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.get("/signup", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, name, email, username, password, hashPw, user, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -90,17 +90,22 @@ router.get('/signup', function (req, res) { return __awaiter(void 0, void 0, voi
             case 3:
                 user = _a.sent();
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " has created an account");
-                res.json({ success: 'user created' }).status(200);
+                res
+                    .json({
+                    success: "user created",
+                    uuid: user.uuid
+                })
+                    .status(200);
                 return [3, 5];
             case 4:
                 err_1 = _a.sent();
                 console.log(err_1);
-                if (err_1.message.includes('duplicate')) {
-                    if (err_1.detail.includes('email')) {
-                        res.json({ email: 'duplicate' }).status(404);
+                if (err_1.message.includes("duplicate")) {
+                    if (err_1.detail.includes("email")) {
+                        res.json({ email: "duplicate" }).status(404);
                     }
-                    if (err_1.detail.includes('username')) {
-                        res.json({ username: 'duplicate' }).status(404);
+                    if (err_1.detail.includes("username")) {
+                        res.json({ username: "duplicate" }).status(404);
                     }
                 }
                 else {
@@ -111,7 +116,7 @@ router.get('/signup', function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
-router.get('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.get("/login", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, username, password, user, verify;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -120,17 +125,20 @@ router.get('/login', function (req, res) { return __awaiter(void 0, void 0, void
                 username = query.username;
                 password = query.password;
                 username = username.toLowerCase();
-                return [4, User_1["default"].findOne({ where: { username: username }, select: ['uuid', 'username', 'password'] })];
+                return [4, User_1["default"].findOne({
+                        where: { username: username },
+                        select: ["uuid", "username", "password"]
+                    })];
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    res.json({ username: 'Incorrect Username/Password' }).status(404);
+                    res.json({ username: "Incorrect Username/Password" }).status(404);
                 }
                 return [4, argon2_1["default"].verify(user.password, password)];
             case 2:
                 verify = _a.sent();
                 if (!verify) {
-                    res.json({ password: 'Incorrect Username/Password' }).status(404);
+                    res.json({ password: "Incorrect Username/Password" }).status(404);
                 }
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " has created an account");
                 res.json({ success: true, uuid: user === null || user === void 0 ? void 0 : user.uuid }).status(200);
@@ -138,7 +146,7 @@ router.get('/login', function (req, res) { return __awaiter(void 0, void 0, void
         }
     });
 }); });
-router.get('/user', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.get("/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, isloggedin, uuid, user;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -147,11 +155,11 @@ router.get('/user', function (req, res) { return __awaiter(void 0, void 0, void 
                 isloggedin = query.isLoggedIn;
                 uuid = query.uuid;
                 user_1.isLoggedIn(isloggedin, uuid, res);
-                return [4, User_1["default"].findOne({ relations: ['tweets'], where: { uuid: uuid } })];
+                return [4, User_1["default"].findOne({ relations: ["tweets"], where: { uuid: uuid } })];
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    res.json({ error: 'error loading user' }).status(400);
+                    res.json({ error: "error loading user" }).status(400);
                 }
                 res.json({ user: user }).status(200);
                 return [2];
