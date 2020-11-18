@@ -18,6 +18,9 @@ import User from './entities/User'
 const user = require("./routes/user");
 const tweets = require("./routes/tweets");
 
+//cron
+import cron from 'cron'
+
 //server/database initialization
 const main = async () => {
   //connect to the database
@@ -37,6 +40,9 @@ const main = async () => {
   app.use(morgan("dev"));
 
   //connect routes
+  app.get('/', (_, res: express.Response) => {
+    res.json({success: 'hello world'}).status(200)
+  })
   app.use("/api/v1/user", user);
   app.use("/api/v1/tweets", tweets);
 
@@ -44,6 +50,16 @@ const main = async () => {
   app.use((_, res: express.Response) => {
     res.status(404).json({ status: "404" });
   });
+
+  //cron job to keep sever alive on heroku
+  const cronJob = new cron.CronJob('0 */25 * * * *', () => {
+    fetch('https://twitter-tut-api.herokuapp.com/')
+      .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
+      .catch(error => console.log(error))
+  });
+
+  //start cron job
+  cronJob.start()
 
   //start server
   app.listen(process.env.PORT || 8081, () => {
