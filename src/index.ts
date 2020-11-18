@@ -21,6 +21,9 @@ const tweets = require("./routes/tweets");
 //cron
 import cron from 'cron'
 
+//fetch
+import fetch from 'node-fetch'
+
 //server/database initialization
 const main = async () => {
   //connect to the database
