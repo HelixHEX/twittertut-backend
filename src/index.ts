@@ -55,14 +55,14 @@ const main = async () => {
   });
 
   //cron job to keep sever alive on heroku
-  const cronJob = new cron.CronJob('0 */25 * * * *', () => {
-    fetch('https://twitter-tut-api.herokuapp.com/')
-      .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
-      .catch(error => console.log(error))
-  });
+  // const cronJob = new cron.CronJob('0 */25 * * * *', () => {
+  //   fetch('https://twitter-tut-api.herokuapp.com/')
+  //     .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
+  //     .catch(error => console.log(error))
+  // });
 
-  //start cron job
-  cronJob.start()
+  // //start cron job
+  // cronJob.start()
 
   //start server
   app.listen(process.env.PORT || 8081, () => {

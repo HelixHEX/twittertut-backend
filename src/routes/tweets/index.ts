@@ -90,6 +90,7 @@ router.get('/usertweets', async(req: express.Request, res: express.Response) => 
   const tweets = user?.tweets
 
   //return tweets to front end
+  //github test
   res.json({tweets: tweets}).json(200)
 })
 
