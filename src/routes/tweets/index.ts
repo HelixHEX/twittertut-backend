@@ -61,10 +61,10 @@ router.get("/feed", async (req: express.Request, res: express.Response) => {
 
   if (isloggedin) {
     // //retrieve tweets
-    const tweets = await Tweet.find({ relations: ["creator"] });
+    const tweets = await Tweet.find();
 
     // //send tweets to frontend
-    res.json({ tweets: tweets }).status(200);
+    res.json({ success: true, tweets: tweets }).status(200);
   }
 });
 
