@@ -45,14 +45,13 @@ var router = express_1["default"].Router();
 var argon2_1 = __importDefault(require("argon2"));
 var user_1 = require("../../utils/user");
 router.get("/me", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, uuid, isloggedin, user;
+    var query, uuid, user;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.query;
                 uuid = query.currentUser;
-                isloggedin = query.isLoggedIn;
-                user_1.isLoggedIn(isloggedin, uuid, res);
+                user_1.isLoggedIn(uuid, res);
                 return [4, User_1["default"].findOne({ relations: ["tweets"], where: { uuid: uuid } })];
             case 1:
                 user = _a.sent();
@@ -132,13 +131,13 @@ router.get("/login", function (req, res) { return __awaiter(void 0, void 0, void
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    res.json({ username: "Incorrect Username/Password" }).status(404);
+                    res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
                 return [4, argon2_1["default"].verify(user.password, password)];
             case 2:
                 verify = _a.sent();
                 if (!verify) {
-                    res.json({ password: "Incorrect Username/Password" }).status(404);
+                    res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " has logged");
                 res.json({ success: true, uuid: user === null || user === void 0 ? void 0 : user.uuid }).status(200);
@@ -147,14 +146,13 @@ router.get("/login", function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); });
 router.get("/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, isloggedin, uuid, user;
+    var query, uuid, user;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.query;
-                isloggedin = query.isLoggedIn;
                 uuid = query.uuid;
-                user_1.isLoggedIn(isloggedin, uuid, res);
+                user_1.isLoggedIn(uuid, res);
                 return [4, User_1["default"].findOne({ relations: ["tweets"], where: { uuid: uuid } })];
             case 1:
                 user = _a.sent();

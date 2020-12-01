@@ -20,10 +20,9 @@ router.get("/me", async (req: express.Request, res: express.Response) => {
 
   //get variables and convert to string
   const uuid = query.currentUser as string;
-  let isloggedin = query.isLoggedIn as string;
 
   //check if user is logged in
-  isLoggedIn(isloggedin, uuid, res);
+  isLoggedIn(uuid, res);
 
   //retrieve user
   const user = await User.findOne({ relations: ["tweets"], where: { uuid } });
@@ -114,7 +113,7 @@ router.get("/login", async (req: express.Request, res: express.Response) => {
 
   //if the user is not found
   if (!user) {
-    res.json({ username: "Incorrect Username/Password" }).status(404);
+    res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
   }
 
   //verify passowrd
@@ -122,7 +121,7 @@ router.get("/login", async (req: express.Request, res: express.Response) => {
 
   //if the passwords don't match
   if (!verify) {
-    res.json({ password: "Incorrect Username/Password" }).status(404);
+    res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
   }
 
   //log user has logged in
@@ -138,11 +137,10 @@ router.get("/user", async (req: express.Request, res: express.Response) => {
   const { query } = req;
 
   //get variables and convert to string
-  let isloggedin = query.isLoggedIn as string;
   const uuid = query.uuid as string;
 
   //check if user is logged in
-  isLoggedIn(isloggedin, uuid, res);
+  isLoggedIn(uuid, res);
   //look for user
   const user = await User.findOne({ relations: ["tweets"], where: { uuid } });
 
