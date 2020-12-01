@@ -44,16 +44,15 @@ var router = express_1["default"].Router();
 var Tweet_1 = __importDefault(require("../../entities/Tweet"));
 var User_1 = __importDefault(require("../../entities/User"));
 var user_1 = require("../../utils/user");
-router.get('/create', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, isloggedin, uuid, tweet, user, createdTweet, err_1;
+router.get("/create", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, uuid, tweet, user, createdTweet, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.query;
-                isloggedin = query.isLoggedIn;
                 uuid = query.currentUser;
                 tweet = query.tweet;
-                user_1.isLoggedIn(isloggedin, uuid, res);
+                user_1.isLoggedIn(uuid, res);
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 4, , 5]);
@@ -67,48 +66,50 @@ router.get('/create', function (req, res) { return __awaiter(void 0, void 0, voi
             case 3:
                 createdTweet = _a.sent();
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " tweeted - " + createdTweet.tweet);
-                res.json({ success: 'tweet created' }).status(200);
+                res.json({ success: "tweet created" }).status(200);
                 return [3, 5];
             case 4:
                 err_1 = _a.sent();
                 console.log(err_1);
-                res.json({ error: 'error creating tweet' }).status(400);
+                res.json({ error: "error creating tweet" }).status(400);
                 return [3, 5];
             case 5: return [2];
         }
     });
 }); });
-router.get('/feed', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, isloggedin, uuid, tweets;
+router.get("/feed", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, uuid, isloggedin, tweets;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.query;
-                isloggedin = query.isLoggedIn;
                 uuid = query.currentUser;
-                user_1.isLoggedIn(isloggedin, uuid, res);
-                return [4, Tweet_1["default"].find({ relations: ['creator'] })];
+                return [4, user_1.isLoggedIn(uuid, res)];
             case 1:
+                isloggedin = _a.sent();
+                if (!isloggedin) return [3, 3];
+                return [4, Tweet_1["default"].find({ relations: ["creator"] })];
+            case 2:
                 tweets = _a.sent();
                 res.json({ tweets: tweets }).status(200);
-                return [2];
+                _a.label = 3;
+            case 3: return [2];
         }
     });
 }); });
-router.get('/usertweets', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, isloggedin, uuid, user, tweets;
+router.get("/usertweets", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, uuid, user, tweets;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.query;
-                isloggedin = query.isLoggedIn;
                 uuid = query.uuid;
-                user_1.isLoggedIn(isloggedin, uuid, res);
-                return [4, User_1["default"].findOne({ relations: ['tweets'], where: { uuid: uuid } })];
+                user_1.isLoggedIn(uuid, res);
+                return [4, User_1["default"].findOne({ relations: ["tweets"], where: { uuid: uuid } })];
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    res.json({ error: 'unable to find user' }).status(404);
+                    res.json({ error: "unable to find user" }).status(404);
                 }
                 tweets = user === null || user === void 0 ? void 0 : user.tweets;
                 res.json({ tweets: tweets }).json(200);
