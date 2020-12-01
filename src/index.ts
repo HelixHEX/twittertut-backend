@@ -19,10 +19,10 @@ const user = require("./routes/user");
 const tweets = require("./routes/tweets");
 
 //cron
-import cron from 'cron'
+// import cron from 'cron'
 
 //fetch
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
 
 //server/database initialization
 const main = async () => {
