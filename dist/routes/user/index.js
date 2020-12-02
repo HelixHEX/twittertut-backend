@@ -91,7 +91,7 @@ router.get("/signup", function (req, res) { return __awaiter(void 0, void 0, voi
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " has created an account");
                 res
                     .json({
-                    success: "user created",
+                    success: true,
                     uuid: user.uuid
                 })
                     .status(200);
@@ -101,14 +101,14 @@ router.get("/signup", function (req, res) { return __awaiter(void 0, void 0, voi
                 console.log(err_1);
                 if (err_1.message.includes("duplicate")) {
                     if (err_1.detail.includes("email")) {
-                        res.json({ email: "duplicate" }).status(404);
+                        res.json({ success: false, email: "duplicate" }).status(404);
                     }
                     if (err_1.detail.includes("username")) {
-                        res.json({ username: "duplicate" }).status(404);
+                        res.json({ success: false, username: "duplicate" }).status(404);
                     }
                 }
                 else {
-                    res.json({ error: err_1.message }).status(400);
+                    res.json({ success: false, error: err_1.message }).status(400);
                 }
                 return [3, 5];
             case 5: return [2];

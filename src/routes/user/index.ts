@@ -68,7 +68,7 @@ router.get("/signup", async (req: express.Request, res: express.Response) => {
     //send success back to front end
     res
       .json({
-        success: "user created",
+        success: true,
         uuid: user.uuid
       })
       .status(200);
@@ -79,16 +79,16 @@ router.get("/signup", async (req: express.Request, res: express.Response) => {
     if (err.message.includes("duplicate")) {
       //check if email is duplicate
       if (err.detail.includes("email")) {
-        res.json({ email: "duplicate" }).status(404);
+        res.json({success: false, email: "duplicate" }).status(404);
       }
 
       //check if username is duplicate
       if (err.detail.includes("username")) {
-        res.json({ username: "duplicate" }).status(404);
+        res.json({success: false, username: "duplicate" }).status(404);
       }
     } else {
       //if it's not a duplicate error
-      res.json({ error: err.message }).status(400);
+      res.json({success: false, error: err.message }).status(400);
     }
   }
 });
