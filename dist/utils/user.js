@@ -39,8 +39,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.isLoggedIn = void 0;
+exports.getusers = exports.removeuser = exports.checkuser = exports.adduser = exports.isLoggedIn = void 0;
 var User_1 = __importDefault(require("../entities/User"));
+var onlineusers = [];
 var isLoggedIn = function (uuid, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
@@ -48,15 +49,15 @@ var isLoggedIn = function (uuid, res) { return __awaiter(void 0, void 0, void 0,
             case 0:
                 console.log(uuid);
                 if (!(uuid == undefined || uuid == "")) return [3, 1];
-                return [2, res.json({ session: 'user not logged in' }).status(400)];
+                return [2, res.json({ success: false, error: 'user not logged in' }).status(400)];
             case 1: return [4, User_1["default"].findOne({ where: { uuid: uuid } })];
             case 2:
                 user = _a.sent();
-                if (!user) {
-                    return [2, res.json({ session: 'user not logged in' }).status(400)];
+                if (user) {
+                    return [2, true];
                 }
                 else {
-                    return [2, true];
+                    return [2, res.json({ success: false, error: 'user not logged in' }).status(400)];
                 }
                 _a.label = 3;
             case 3: return [2];
@@ -64,4 +65,41 @@ var isLoggedIn = function (uuid, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.isLoggedIn = isLoggedIn;
+var getusers = function () {
+    return onlineusers.length;
+};
+exports.getusers = getusers;
+var adduser = function (uuid) {
+    var check = checkuser(uuid);
+    if (!check) {
+        onlineusers.push(uuid);
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+exports.adduser = adduser;
+var checkuser = function (uuid) {
+    for (var i = 0; i < onlineusers.length; i++) {
+        if (onlineusers[i] === uuid) {
+            return true;
+        }
+    }
+    return false;
+};
+exports.checkuser = checkuser;
+var removeuser = function (uuid) {
+    var check = checkuser(uuid);
+    if (check) {
+        for (var i = 0; i < onlineusers.length; i++) {
+            if (onlineusers[i] === uuid) {
+                onlineusers.splice(i, 1);
+                return true;
+            }
+        }
+    }
+    return false;
+};
+exports.removeuser = removeuser;
 //# sourceMappingURL=user.js.map

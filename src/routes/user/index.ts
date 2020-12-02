@@ -11,7 +11,10 @@ const router = express.Router();
 import argon2 from "argon2";
 
 //logged in funciton
-import { isLoggedIn } from "../../utils/user";
+import { isLoggedIn, removeuser, getusers } from "../../utils/user";
+
+//online users
+var onlineusers = [] as any
 
 //get current user route
 router.get("/me", async (req: express.Request, res: express.Response) => {
@@ -88,6 +91,7 @@ router.get("/signup", async (req: express.Request, res: express.Response) => {
       }
     } else {
       //if it's not a duplicate error
+      onlineusers.push('/')
       res.json({success: false, error: err.message }).status(400);
     }
   }
@@ -127,8 +131,15 @@ router.get("/login", async (req: express.Request, res: express.Response) => {
   //log user has logged in
   console.log(`${user?.username} has logged`);
 
-  //send success
-  res.json({ success: true, uuid: user?.uuid, name: user?.name }).status(200);
+  //store user in onlineusers
+  // const add = adduser(user?.uuid as string);
+
+  if(isLoggedIn(user?.uuid as string, res)) {
+    //send success
+    res.json({ success: true, uuid: user?.uuid, name: user?.name }).status(200);
+  } else {
+    res.json({success: false, error: 'isloggedin'}).status(400);
+  }
 });
 
 //view specific user profile
@@ -152,6 +163,41 @@ router.get("/user", async (req: express.Request, res: express.Response) => {
 
   //send data back to front end
   res.json({ user: user }).status(200);
+});
+
+//logout user
+router.get('/logout', async (req: express.Request, res: express.Response) => {
+  //query the variables from the front end
+  const { query } = req;
+
+  //get variables and convert to string
+  const uuid = query.currentUser as string;
+ 
+  const remove = removeuser(uuid);
+
+  if (remove) {
+    res.json({success:true}).status(200);
+  } else {
+    res.json({success: true, error: 'user not logged in'}).status(404);
+  }
+})
+
+//get online users
+router.get('/onlineusers', async (req: express.Request, res: express.Response) => {
+  //query the variables from the front end
+  const { query } = req;
+
+  //get variables and convert to string
+  const uuid = query.currentUser as string;
+
+  //check if user is logged in 
+  const isloggedin = await isLoggedIn(uuid, res);
+
+  if (isloggedin) {
+    const users = getusers()
+    //send how many users are logged in
+    res.json({success: true, users}).status(200)
+  }
 });
 
 //export the router variable so it's seeable to other files
