@@ -66,12 +66,12 @@ router.get("/create", function (req, res) { return __awaiter(void 0, void 0, voi
             case 3:
                 createdTweet = _a.sent();
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " tweeted - " + createdTweet.tweet);
-                res.json({ success: "tweet created" }).status(200);
+                res.json({ success: true }).status(200);
                 return [3, 5];
             case 4:
                 err_1 = _a.sent();
                 console.log(err_1);
-                res.json({ error: "error creating tweet" }).status(400);
+                res.json({ success: false, error: "error creating tweet" }).status(400);
                 return [3, 5];
             case 5: return [2];
         }
@@ -109,10 +109,10 @@ router.get("/usertweets", function (req, res) { return __awaiter(void 0, void 0,
             case 1:
                 user = _a.sent();
                 if (!user) {
-                    res.json({ error: "unable to find user" }).status(404);
+                    res.json({ success: false, error: "unable to find user" }).status(404);
                 }
                 tweets = user === null || user === void 0 ? void 0 : user.tweets;
-                res.json({ tweets: tweets }).json(200);
+                res.json({ success: true, tweets: tweets }).json(200);
                 return [2];
         }
     });
