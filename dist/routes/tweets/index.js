@@ -88,7 +88,7 @@ router.get("/feed", function (req, res) { return __awaiter(void 0, void 0, void 
             case 1:
                 isloggedin = _a.sent();
                 if (!isloggedin) return [3, 3];
-                return [4, Tweet_1["default"].find()];
+                return [4, Tweet_1["default"].find({ relations: ["creator"] })];
             case 2:
                 tweets = _a.sent();
                 res.json({ success: true, tweets: tweets }).status(200);
