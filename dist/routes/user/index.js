@@ -126,7 +126,7 @@ router.get("/login", function (req, res) { return __awaiter(void 0, void 0, void
                 username = username.toLowerCase();
                 return [4, User_1["default"].findOne({
                         where: { username: username },
-                        select: ["uuid", "username", "password"]
+                        select: ["uuid", "username", "password", "name"]
                     })];
             case 1:
                 user = _a.sent();
