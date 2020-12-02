@@ -101,10 +101,10 @@ router.get("/signup", function (req, res) { return __awaiter(void 0, void 0, voi
                 console.log(err_1);
                 if (err_1.message.includes("duplicate")) {
                     if (err_1.detail.includes("email")) {
-                        res.json({ success: false, email: "duplicate" }).status(404);
+                        res.json({ success: false, error: "email" }).status(404);
                     }
                     if (err_1.detail.includes("username")) {
-                        res.json({ success: false, username: "duplicate" }).status(404);
+                        res.json({ success: false, error: "username" }).status(404);
                     }
                 }
                 else {

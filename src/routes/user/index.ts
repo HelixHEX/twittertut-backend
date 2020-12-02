@@ -79,12 +79,12 @@ router.get("/signup", async (req: express.Request, res: express.Response) => {
     if (err.message.includes("duplicate")) {
       //check if email is duplicate
       if (err.detail.includes("email")) {
-        res.json({success: false, email: "duplicate" }).status(404);
+        res.json({success: false, error: "email" }).status(404);
       }
 
       //check if username is duplicate
       if (err.detail.includes("username")) {
-        res.json({success: false, username: "duplicate" }).status(404);
+        res.json({success: false, error: "username" }).status(404);
       }
     } else {
       //if it's not a duplicate error
