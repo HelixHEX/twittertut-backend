@@ -38,13 +38,13 @@ router.get("/create", async (req: express.Request, res: express.Response) => {
     console.log(`${user?.username} tweeted - ${createdTweet.tweet}`);
 
     //return success to front end
-    res.json({ success: "tweet created" }).status(200);
+    res.json({ success: true }).status(200);
   } catch (err) {
     //log error
     console.log(err);
 
     //return error to front end
-    res.json({ error: "error creating tweet" }).status(400);
+    res.json({ success: false, error: "error creating tweet" }).status(400);
   }
 });
 
@@ -84,13 +84,13 @@ router.get(
     //retrieve tweets
     const user = await User.findOne({ relations: ["tweets"], where: { uuid } });
     if (!user) {
-      res.json({ error: "unable to find user" }).status(404);
+      res.json({ success: false, error: "unable to find user" }).status(404);
     }
     const tweets = user?.tweets;
 
     //return tweets to front end
     //github test
-    res.json({ tweets: tweets }).json(200);
+    res.json({ success: true, tweets: tweets }).json(200);
   }
 );
 
