@@ -78,17 +78,18 @@ router.get("/create", function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); });
 router.get("/feed", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var query, uuid, isloggedin, tweets;
+    var query, uuid, offset, isloggedin, tweets;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 query = req.query;
                 uuid = query.currentUser;
+                offset = query.offset;
                 return [4, user_1.isLoggedIn(uuid, res)];
             case 1:
                 isloggedin = _a.sent();
                 if (!isloggedin) return [3, 3];
-                return [4, Tweet_1["default"].find({ relations: ["creator"] })];
+                return [4, Tweet_1["default"].findAndCount({ relations: ["creator"], skip: parseInt(offset), take: 3, order: { createdAt: 'DESC' } })];
             case 2:
                 tweets = _a.sent();
                 res.json({ success: true, tweets: tweets }).status(200);

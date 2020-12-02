@@ -55,13 +55,14 @@ router.get("/feed", async (req: express.Request, res: express.Response) => {
 
   //get variables and convert to string
   const uuid = query.currentUser as string;
+  const offset = query.offset as string;
 
   //check if user is logged in
   const isloggedin = await isLoggedIn(uuid, res);
 
   if (isloggedin) {
     // //retrieve tweets
-    const tweets = await Tweet.find({ relations: ["creator"] });
+    const tweets = await Tweet.findAndCount({ relations: ["creator"], skip: parseInt(offset), take: 3, order: {createdAt: 'DESC'}});
 
     // //send tweets to frontend
     res.json({ success: true, tweets: tweets }).status(200);
