@@ -44,6 +44,7 @@ var User_1 = __importDefault(require("../../entities/User"));
 var router = express_1["default"].Router();
 var argon2_1 = __importDefault(require("argon2"));
 var user_1 = require("../../utils/user");
+var onlineusers = [];
 router.get("/me", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var query, uuid, user;
     return __generator(this, function (_a) {
@@ -108,6 +109,7 @@ router.get("/signup", function (req, res) { return __awaiter(void 0, void 0, voi
                     }
                 }
                 else {
+                    onlineusers.push('/');
                     res.json({ success: false, error: err_1.message }).status(400);
                 }
                 return [3, 5];
@@ -140,7 +142,12 @@ router.get("/login", function (req, res) { return __awaiter(void 0, void 0, void
                     res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
                 console.log((user === null || user === void 0 ? void 0 : user.username) + " has logged");
-                res.json({ success: true, uuid: user === null || user === void 0 ? void 0 : user.uuid, name: user === null || user === void 0 ? void 0 : user.name }).status(200);
+                if (user_1.isLoggedIn(user === null || user === void 0 ? void 0 : user.uuid, res)) {
+                    res.json({ success: true, uuid: user === null || user === void 0 ? void 0 : user.uuid, name: user === null || user === void 0 ? void 0 : user.name }).status(200);
+                }
+                else {
+                    res.json({ success: false, error: 'isloggedin' }).status(400);
+                }
                 return [2];
         }
     });
@@ -160,6 +167,39 @@ router.get("/user", function (req, res) { return __awaiter(void 0, void 0, void 
                     res.json({ error: "error loading user" }).status(400);
                 }
                 res.json({ user: user }).status(200);
+                return [2];
+        }
+    });
+}); });
+router.get('/logout', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, uuid, remove;
+    return __generator(this, function (_a) {
+        query = req.query;
+        uuid = query.currentUser;
+        remove = user_1.removeuser(uuid);
+        if (remove) {
+            res.json({ success: true }).status(200);
+        }
+        else {
+            res.json({ success: true, error: 'user not logged in' }).status(404);
+        }
+        return [2];
+    });
+}); });
+router.get('/onlineusers', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, uuid, isloggedin, users;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                query = req.query;
+                uuid = query.currentUser;
+                return [4, user_1.isLoggedIn(uuid, res)];
+            case 1:
+                isloggedin = _a.sent();
+                if (isloggedin) {
+                    users = user_1.getusers();
+                    res.json({ success: true, users: users }).status(200);
+                }
                 return [2];
         }
     });
