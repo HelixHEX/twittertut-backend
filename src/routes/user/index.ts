@@ -108,7 +108,7 @@ router.get("/login", async (req: express.Request, res: express.Response) => {
   //look for user
   const user = await User.findOne({
     where: { username },
-    select: ["uuid", "username", "password"],
+    select: ["uuid", "username", "password", "name"],
   });
 
   //if the user is not found
