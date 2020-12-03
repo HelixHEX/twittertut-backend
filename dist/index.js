@@ -86,14 +86,6 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 app.use(function (_, res) {
                     res.status(404).json({ status: "404" });
                 });
-                cron_1["default"];
-                job;
-                to;
-                keep;
-                sever;
-                alive;
-                on;
-                heroku;
                 cronJob = new cron_1["default"].CronJob('0 */25 * * * *', function () {
                     node_fetch_1["default"]('https://twitter-tut-api.herokuapp.com/')
                         .then(function (res) { return console.log("response-ok: " + res.ok + ", status: " + res.status); })["catch"](function (error) { return console.log(error); });
