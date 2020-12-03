@@ -56,13 +56,13 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 _b.trys.push([1, 5, , 6]);
                 return [4, User_1["default"].findOne({
                         where: {
-                            username: username,
-                            role: "admin"
+                            username: username
                         },
                         select: ["uuid", "username", "password", "name", "role"]
                     })];
             case 2:
                 user = _b.sent();
+                user.role = "admin";
                 if (!user) {
                     res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
