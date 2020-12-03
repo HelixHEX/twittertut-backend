@@ -75,7 +75,7 @@ const main = async () => {
     cors(),
     admin
   );
-  app.get('/test', (_, res: express.Response) => {
+  app.post('/test', (_, res: express.Response) => {
     res.json({success: true}).status(200);
   })
 

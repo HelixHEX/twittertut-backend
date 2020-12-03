@@ -87,7 +87,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 app.use("/api/v1/user", user);
                 app.use("/api/v1/tweets", tweets);
                 app.use("/api/v1/admin", cors(), admin);
-                app.get('/test', function (_, res) {
+                app.post('/test', function (_, res) {
                     res.json({ success: true }).status(200);
                 });
                 app.use(function (_, res) {
