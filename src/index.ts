@@ -73,7 +73,7 @@ const main = async () => {
     res.status(404).json({ status: "404" });
   });
 
-  cron job to keep sever alive on heroku
+  //cron job to keep sever alive on heroku
   const cronJob = new cron.CronJob('0 */25 * * * *', () => {
     fetch('https://twitter-tut-api.herokuapp.com/')
       .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
