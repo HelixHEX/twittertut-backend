@@ -20,10 +20,10 @@ const tweets = require("./routes/tweets");
 const admin = require("./routes/admin");
 
 //cron
-// import cron from 'cron'
+import cron from 'cron'
 
 //fetch
-// import fetch from 'node-fetch'
+import fetch from 'node-fetch'
 
 //cors
 const cors = require("cors");
@@ -46,7 +46,9 @@ const main = async () => {
   //setup morgan
   app.use(morgan("dev"));
 
-  //cors policy
+  //json parser
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
   //connect routes
   app.get("/", (_, res: express.Response) => {
@@ -71,15 +73,15 @@ const main = async () => {
     res.status(404).json({ status: "404" });
   });
 
-  //cron job to keep sever alive on heroku
-  // const cronJob = new cron.CronJob('0 */25 * * * *', () => {
-  //   fetch('https://twitter-tut-api.herokuapp.com/')
-  //     .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
-  //     .catch(error => console.log(error))
-  // });
+  cron job to keep sever alive on heroku
+  const cronJob = new cron.CronJob('0 */25 * * * *', () => {
+    fetch('https://twitter-tut-api.herokuapp.com/')
+      .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
+      .catch(error => console.log(error))
+  });
 
-  // //start cron job
-  // cronJob.start()
+  //start cron job
+  cronJob.start()
 
   //start server
   app.listen(process.env.PORT || 8081, () => {

@@ -28,4 +28,8 @@ export default class User extends BaseEntity{
   @OneToMany(() => Tweet, (tweet:Tweet) => tweet.creator)
   tweets: Tweet[]
 
+  @Column({
+    default: 'user'
+  })
+  role: string;
 }
