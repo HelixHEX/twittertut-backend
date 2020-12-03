@@ -11,18 +11,22 @@ const morgan = require("morgan");
 import { createConnection } from "typeorm";
 
 //entities (how information is stored within the database)
-import Tweet from './entities/Tweet'
-import User from './entities/User'
+import Tweet from "./entities/Tweet";
+import User from "./entities/User";
 
 //routes (similar to how urls work)
 const user = require("./routes/user");
 const tweets = require("./routes/tweets");
+const admin = require("./routes/admin");
 
 //cron
 // import cron from 'cron'
 
 //fetch
 // import fetch from 'node-fetch'
+
+//cors
+const cors = require("cors");
 
 //server/database initialization
 const main = async () => {
@@ -42,12 +46,25 @@ const main = async () => {
   //setup morgan
   app.use(morgan("dev"));
 
+  //cors policy
+
   //connect routes
-  app.get('/', (_, res: express.Response) => {
-    res.json({success: 'hello world'}).status(200)
-  })
+  app.get("/", (_, res: express.Response) => {
+    res.json({ success: "hello world" }).status(200);
+  });
   app.use("/api/v1/user", user);
   app.use("/api/v1/tweets", tweets);
+  app.use(
+    "/api/v1/admin",
+    cors({
+      origin: [
+        "http://localhost:3000",
+        "https://chatapplication.vercel.app",
+      ],
+      credentials: true,
+    }),
+    admin
+  );
 
   //if someome attempts to access a route that doesn't exist
   app.use((_, res: express.Response) => {

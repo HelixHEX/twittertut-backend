@@ -49,6 +49,8 @@ var Tweet_1 = __importDefault(require("./entities/Tweet"));
 var User_1 = __importDefault(require("./entities/User"));
 var user = require("./routes/user");
 var tweets = require("./routes/tweets");
+var admin = require("./routes/admin");
+var cors = require("cors");
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var app;
     return __generator(this, function (_a) {
@@ -65,11 +67,18 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 _a.sent();
                 app = express_1["default"]();
                 app.use(morgan("dev"));
-                app.get('/', function (_, res) {
-                    res.json({ success: 'hello world' }).status(200);
+                app.get("/", function (_, res) {
+                    res.json({ success: "hello world" }).status(200);
                 });
                 app.use("/api/v1/user", user);
                 app.use("/api/v1/tweets", tweets);
+                app.use("/api/v1/admin", cors({
+                    origin: [
+                        "http://localhost:3000",
+                        "https://chatapplication.vercel.app",
+                    ],
+                    credentials: true
+                }), admin);
                 app.use(function (_, res) {
                     res.status(404).json({ status: "404" });
                 });
