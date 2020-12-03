@@ -56,13 +56,13 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 _b.trys.push([1, 5, , 6]);
                 return [4, User_1["default"].findOne({
                         where: {
-                            username: username
+                            username: username,
+                            role: 'admin'
                         },
                         select: ["uuid", "username", "password", "name", "role"]
                     })];
             case 2:
                 user = _b.sent();
-                user.role = "admin";
                 if (!user) {
                     res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
@@ -107,7 +107,6 @@ router.post('/tweets', function (req, res) { return __awaiter(void 0, void 0, vo
                 return [4, Tweet_1["default"].findAndCount({ relations: ['creator'] })];
             case 3:
                 tweets = _a.sent();
-                console.log(tweets);
                 res.json({ success: true, tweets: tweets[0], tweetCount: tweets[1] });
                 return [2];
         }
