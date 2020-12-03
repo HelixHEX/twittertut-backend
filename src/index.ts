@@ -18,6 +18,7 @@ import User from "./entities/User";
 const user = require("./routes/user");
 const tweets = require("./routes/tweets");
 const admin = require("./routes/admin");
+const test = require('./routes/test')
 
 //cron
 import cron from 'cron'
@@ -52,13 +53,13 @@ const main = async () => {
 
   //headers config
   app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-    res.header("Access-Control-Allow-Credentials", true);
+    // res.header("Access-Control-Allow-Origin", "*");
+    // res.header(
+    //   "Access-Control-Allow-Headers",
+    //   "Origin, X-Requested-With, Content-Type, Accept"
+    // );
+    // res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+    // res.header("Access-Control-Allow-Credentials", true);
     if (req.method === "OPTIONS") {
       return res.sendStatus(204);
     }
@@ -75,9 +76,7 @@ const main = async () => {
     cors(),
     admin
   );
-  app.post('/test', (_, res: express.Response) => {
-    res.json({success: true}).status(200);
-  })
+  app.use('/test', test);
 
   //if someome attempts to access a route that doesn't exist
   app.use((_, res: express.Response) => {
