@@ -45,7 +45,7 @@ var Tweet_1 = __importDefault(require("../../entities/Tweet"));
 var argon2_1 = __importDefault(require("argon2"));
 var router = express_1["default"].Router();
 router.post("/login", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, _a, username, password, user2, user, verify, hashUUID, err_1;
+    var body, _a, username, password, user, verify, hashUUID, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -53,15 +53,7 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 _a = body.values, username = _a.username, password = _a.password;
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 6, , 7]);
-                return [4, User_1["default"].findOne({
-                        where: { username: username }
-                    })];
-            case 2:
-                user2 = _b.sent();
-                user2.role = 'admin';
-                user2.save();
-                console.log(user2);
+                _b.trys.push([1, 5, , 6]);
                 return [4, User_1["default"].findOne({
                         where: {
                             username: username,
@@ -69,27 +61,27 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                         },
                         select: ["uuid", "username", "password", "name", "role"]
                     })];
-            case 3:
+            case 2:
                 user = _b.sent();
                 if (!user) {
                     res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
                 return [4, argon2_1["default"].verify(user.password, password)];
-            case 4:
+            case 3:
                 verify = _b.sent();
                 if (!verify) {
                     res.json({ success: false, error: "Incorrect Username/Password" }).status(404);
                 }
                 return [4, argon2_1["default"].hash(user.uuid)];
-            case 5:
+            case 4:
                 hashUUID = _b.sent();
                 res.json({ success: true, uuid: hashUUID, name: user === null || user === void 0 ? void 0 : user.name, username: user === null || user === void 0 ? void 0 : user.username }).status(200);
-                return [3, 7];
-            case 6:
+                return [3, 6];
+            case 5:
                 err_1 = _b.sent();
                 res.json({ success: false, error: err_1 }).status(404);
-                return [3, 7];
-            case 7: return [2];
+                return [3, 6];
+            case 6: return [2];
         }
     });
 }); });
