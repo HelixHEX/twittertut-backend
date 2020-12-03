@@ -8,4 +8,5 @@ var router = express_1["default"].Router();
 router.post('/login', function (req, res) {
     res.send("hi");
 });
+module.exports = router;
 //# sourceMappingURL=index.js.map
