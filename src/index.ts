@@ -63,7 +63,7 @@ const main = async () => {
         "http://localhost:3000",
         "https://rettiwt-dashboard.vercel.app/",
       ],
-      credentials: true,
+      credentials: false,
     }),
     admin
   );
