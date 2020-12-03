@@ -58,13 +58,7 @@ const main = async () => {
   app.use("/api/v1/tweets", tweets);
   app.use(
     "/api/v1/admin",
-    cors({
-      origin: [
-        "http://localhost:3000",
-        "https://rettiwt-dashboard.vercel.app/",
-      ],
-      credentials: false,
-    }),
+    cors(),
     admin
   );
 
