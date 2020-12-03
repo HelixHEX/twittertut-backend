@@ -75,6 +75,9 @@ const main = async () => {
     cors(),
     admin
   );
+  app.get('/test', (_, res: express.Response) => {
+    res.json({success: true}).status(200);
+  })
 
   //if someome attempts to access a route that doesn't exist
   app.use((_, res: express.Response) => {
