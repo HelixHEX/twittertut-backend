@@ -9,3 +9,5 @@ const router = express.Router();
 router.post('/login', (req: express.Request, res: express.Response) => {
   res.send("hi")
 })
+
+module.exports = router
