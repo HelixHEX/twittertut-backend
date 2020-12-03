@@ -22,14 +22,12 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
     const user = await User.findOne({
       where: {
         username,
-        role: "admin",
       },
       select: ["uuid", "username", "password", "name", "role"]
     });
-
-
-    //verify password
     
+    //add admin user role
+    user!.role = "admin"
 
     //if no user is found
     if(!user) {
