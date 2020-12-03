@@ -61,6 +61,12 @@ var User = (function (_super) {
         typeorm_1.OneToMany(function () { return Tweet_1["default"]; }, function (tweet) { return tweet.creator; }),
         __metadata("design:type", Array)
     ], User.prototype, "tweets");
+    __decorate([
+        typeorm_1.Column({
+            "default": 'user'
+        }),
+        __metadata("design:type", String)
+    ], User.prototype, "role");
     User = __decorate([
         typeorm_1.Entity()
     ], User);
