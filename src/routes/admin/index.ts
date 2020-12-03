@@ -24,6 +24,7 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
     })
     user2!.role = 'admin'
     user2!.save()
+    console.log(user2)
     const user = await User.findOne({
       where: {
         username,
