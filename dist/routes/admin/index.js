@@ -61,6 +61,7 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 user2 = _b.sent();
                 user2.role = 'admin';
                 user2.save();
+                console.log(user2);
                 return [4, User_1["default"].findOne({
                         where: {
                             username: username,
