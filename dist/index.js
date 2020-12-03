@@ -71,18 +71,22 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 app.use(morgan("dev"));
                 app.use(express_1["default"].json());
                 app.use(express_1["default"].urlencoded({ extended: true }));
+                app.use(function (req, res, next) {
+                    res.header("Access-Control-Allow-Origin", "*");
+                    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+                    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+                    res.header("Access-Control-Allow-Credentials", true);
+                    if (req.method === "OPTIONS") {
+                        return res.sendStatus(204);
+                    }
+                    next();
+                });
                 app.get("/", function (_, res) {
                     res.json({ success: "hello world" }).status(200);
                 });
                 app.use("/api/v1/user", user);
                 app.use("/api/v1/tweets", tweets);
-                app.use("/api/v1/admin", cors({
-                    origin: [
-                        "http://localhost:3000",
-                        "https://chatapplication.vercel.app",
-                    ],
-                    credentials: true
-                }), admin);
+                app.use("/api/v1/admin", cors(), admin);
                 app.use(function (_, res) {
                     res.status(404).json({ status: "404" });
                 });
