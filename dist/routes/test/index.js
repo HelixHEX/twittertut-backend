@@ -9,4 +9,5 @@ router.post('/', function (req, res) {
     console.log(req.body);
     res.json({ success: true }).status(200);
 });
+module.exports = router;
 //# sourceMappingURL=index.js.map
