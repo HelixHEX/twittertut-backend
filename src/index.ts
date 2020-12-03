@@ -61,7 +61,7 @@ const main = async () => {
     cors({
       origin: [
         "http://localhost:3000",
-        "https://chatapplication.vercel.app",
+        "https://rettiwt-dashboard.vercel.app/",
       ],
       credentials: true,
     }),
