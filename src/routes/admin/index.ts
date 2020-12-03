@@ -19,12 +19,6 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
 
   //attempt to log user in
   try {
-    const user2 = await User.findOne({
-      where: {username}
-    })
-    user2!.role = 'admin'
-    user2!.save()
-    console.log(user2)
     const user = await User.findOne({
       where: {
         username,
