@@ -91,7 +91,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                     res.status(404).json({ status: "404" });
                 });
                 cronJob = new cron_1["default"].CronJob('0 */25 * * * *', function () {
-                    node_fetch_1["default"]('https://twitter-tut-api.herokuapp.com/')
+                    node_fetch_1["default"]('https://twitter-tut-backapp.herokuapp.com/')
                         .then(function (res) { return console.log("response-ok: " + res.ok + ", status: " + res.status); })["catch"](function (error) { return console.log(error); });
                 });
                 cronJob.start();
