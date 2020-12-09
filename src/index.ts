@@ -52,30 +52,29 @@ const main = async () => {
   app.use(express.urlencoded({ extended: true }));
 
   //headers config
-  app.use(function(req, res, next) {
-    // res.header("Access-Control-Allow-Origin", "*");
-    // res.header(
-    //   "Access-Control-Allow-Headers",
-    //   "Origin, X-Requested-With, Content-Type, Accept"
-    // );
-    // res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-    // res.header("Access-Control-Allow-Credentials", true);
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(204);
-    }
-    next();
-  });
+  // app.use(function(req, res, next) {
+  //   // res.header("Access-Control-Allow-Origin", "*");
+  //   // res.header(
+  //   //   "Access-Control-Allow-Headers",
+  //   //   "Origin, X-Requested-With, Content-Type, Accept"
+  //   // );
+  //   // res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+  //   // res.header("Access-Control-Allow-Credentials", true);
+  //   if (req.method === "OPTIONS") {
+  //     return res.sendStatus(204);
+  //   }
+  //   next();
+  // });
+
+  //cors
+  app.use(cors())
   //connect routes
   app.get("/", (_, res: express.Response) => {
     res.json({ success: "hello world" }).status(200);
   });
   app.use("/api/v1/user", user);
   app.use("/api/v1/tweets", tweets);
-  app.use(
-    "/api/v1/admin",
-    cors(),
-    admin
-  );
+  app.use("/api/v1/admin", admin );
   app.use('/test', test);
 
   //if someome attempts to access a route that doesn't exist
@@ -84,14 +83,14 @@ const main = async () => {
   });
 
   //cron job to keep sever alive on heroku
-  const cronJob = new cron.CronJob('0 */25 * * * *', () => {
-    fetch('https://twitter-tut-backapp.herokuapp.com/')
-      .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
-      .catch(error => console.log(error))
-  });
+  // const cronJob = new cron.CronJob('0 */25 * * * *', () => {
+  //   fetch('https://twitter-tut-backapp.herokuapp.com/')
+  //     .then(res => console.log(`response-ok: ${res.ok}, status: ${res.status}`))
+  //     .catch(error => console.log(error))
+  // });
 
-  //start cron job
-  cronJob.start()
+  // //start cron job
+  // cronJob.start()
 
   //start server
   app.listen(process.env.PORT || 8081, () => {

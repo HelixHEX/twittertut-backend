@@ -51,11 +51,9 @@ var user = require("./routes/user");
 var tweets = require("./routes/tweets");
 var admin = require("./routes/admin");
 var test = require('./routes/test');
-var cron_1 = __importDefault(require("cron"));
-var node_fetch_1 = __importDefault(require("node-fetch"));
 var cors = require("cors");
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var app, cronJob;
+    var app;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4, typeorm_1.createConnection({
@@ -72,27 +70,17 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 app.use(morgan("dev"));
                 app.use(express_1["default"].json());
                 app.use(express_1["default"].urlencoded({ extended: true }));
-                app.use(function (req, res, next) {
-                    if (req.method === "OPTIONS") {
-                        return res.sendStatus(204);
-                    }
-                    next();
-                });
+                app.use(cors());
                 app.get("/", function (_, res) {
                     res.json({ success: "hello world" }).status(200);
                 });
                 app.use("/api/v1/user", user);
                 app.use("/api/v1/tweets", tweets);
-                app.use("/api/v1/admin", cors(), admin);
+                app.use("/api/v1/admin", admin);
                 app.use('/test', test);
                 app.use(function (_, res) {
                     res.status(404).json({ status: "404" });
                 });
-                cronJob = new cron_1["default"].CronJob('0 */25 * * * *', function () {
-                    node_fetch_1["default"]('https://twitter-tut-backapp.herokuapp.com/')
-                        .then(function (res) { return console.log("response-ok: " + res.ok + ", status: " + res.status); })["catch"](function (error) { return console.log(error); });
-                });
-                cronJob.start();
                 app.listen(process.env.PORT || 8081, function () {
                     console.log("\uD83D\uDE80 Server started at http://localhost:" + process.env.PORT);
                 });
