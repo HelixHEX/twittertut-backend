@@ -95,43 +95,13 @@ router.post('/checklogin', function (req, res) { return __awaiter(void 0, void 0
         return [2];
     });
 }); });
+router.post('/test', function (req, res) {
+    res.send("HEYYY");
+});
 router.post('/tweets', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, uuid, username, user, verify, tweets, err_2;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                body = req.body;
-                uuid = body.uuid, username = body.username;
-                return [4, User_1["default"].findOne({ where: { username: username } })];
-            case 1:
-                user = _a.sent();
-                if (!user) {
-                    res.json({ success: false, error: 'User Not Logged In' }).status(404);
-                    console.log('user not found');
-                }
-                return [4, argon2_1["default"].verify(uuid, user.uuid)];
-            case 2:
-                verify = _a.sent();
-                if (!verify) {
-                    res.json({ success: false, error: 'User Not Logged In' }).status(404);
-                    console.log('uuid not matched');
-                }
-                _a.label = 3;
-            case 3:
-                _a.trys.push([3, 5, , 6]);
-                return [4, Tweet_1["default"].findAndCount({ relations: ['creator'] })];
-            case 4:
-                tweets = _a.sent();
-                console.log('tweets sent');
-                res.json({ success: true, tweets: tweets[0], tweetCount: tweets[1] }).status(200);
-                return [3, 6];
-            case 5:
-                err_2 = _a.sent();
-                console.log(err_2);
-                res.json({ success: false, error: err_2 }).status(400);
-                return [3, 6];
-            case 6: return [2];
-        }
+        res.send("heyy");
+        return [2];
     });
 }); });
 router.post('/users', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {

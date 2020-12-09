@@ -75,37 +75,41 @@ router.post('/checklogin', async (req: express.Request, res: express.Response) =
   res.json({success: true}).status(200);
 })
 
+router.post('/test', (req: express.Request, res: express.Response) => {
+  res.send("HEYYY")
+})
+
 router.post('/tweets', async (req: express.Request, res: express.Response) => {
-  //get data
-  const { body } = req;
+  // //get data
+  // const { body } = req;
 
-  const { uuid, username} = body;
+  // const { uuid, username} = body;
 
-  //check if user is logged in 
-  const user = await User.findOne({where: {username}});
+  // //check if user is logged in 
+  // const user = await User.findOne({where: {username}});
   
-  if (!user) {
-    res.json({success: false, error: 'User Not Logged In'}).status(404);
-    console.log('user not found')
-  }
-  //unhash uuid
-  const verify = await argon2.verify(uuid, user!.uuid);
-  if (!verify) {
-    res.json({success: false, error: 'User Not Logged In'}).status(404);
-    console.log('uuid not matched')
-  }
+  // if (!user) {
+  //   res.json({success: false, error: 'User Not Logged In'}).status(404);
+  //   console.log('user not found')
+  // }
+  // //unhash uuid
+  // const verify = await argon2.verify(uuid, user!.uuid);
+  // if (!verify) {
+  //   res.json({success: false, error: 'User Not Logged In'}).status(404);
+  //   console.log('uuid not matched')
+  // }
 
-  // const tweets = await Tweet.findAndCount({relations: ['creator']})
-  // if (!tweets)
-  try {
-    const tweets = await Tweet.findAndCount({relations:['creator'] });
-    console.log('tweets sent')
-    res.json({success: true, tweets: tweets[0], tweetCount: tweets[1]}).status(200);
-  } catch(err) {
-    console.log(err)
-    res.json({success: false, error: err}).status(400);
-  }
-  
+  // // const tweets = await Tweet.findAndCount({relations: ['creator']})
+  // // if (!tweets)
+  // try {
+  //   const tweets = await Tweet.findAndCount({relations:['creator'] });
+  //   console.log('tweets sent')
+  //   res.json({success: true, tweets: tweets[0], tweetCount: tweets[1]}).status(200);
+  // } catch(err) {
+  //   console.log(err)
+  //   res.json({success: false, error: err}).status(400);
+  // }
+  res.send("heyy")
 })
 
 router.post('/users', async (req: express.Request, res: express.Response) => {
