@@ -42,8 +42,11 @@ exports.__esModule = true;
 require("reflect-metadata");
 require("dotenv-safe/config");
 var express_1 = __importDefault(require("express"));
+var path = require("path");
 var morgan = require("morgan");
 var typeorm_1 = require("typeorm");
+var Tweet_1 = __importDefault(require("./entities/Tweet"));
+var User_1 = __importDefault(require("./entities/User"));
 var user = require("./routes/user");
 var tweets = require("./routes/tweets");
 var admin = require("./routes/admin");
@@ -53,7 +56,15 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var app;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, typeorm_1.createConnection()];
+            case 0: return [4, typeorm_1.createConnection({
+                    type: "postgres",
+                    url: process.env.DATABASE_URL,
+                    logging: false,
+                    synchronize: true,
+                    migrations: [path.join(__dirname, "./migrations/*")],
+                    entities: [Tweet_1["default"], User_1["default"]],
+                    ssl: true
+                })];
             case 1:
                 _a.sent();
                 app = express_1["default"]();

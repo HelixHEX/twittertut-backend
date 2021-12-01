@@ -33,16 +33,16 @@ const cors = require("cors");
 //server/database initialization
 const main = async () => {
   //connect to the database
-  await createConnection()
-  // await createConnection({
-  //   type: "postgres",
-  //   url: process.env.DATABASE_URL,
-  //   logging: false,
-  //   synchronize: true,
-  //   migrations: [path.join(__dirname, "./migrations/*")],
-  //   entities: [Tweet, User],
-  //   ssl:
-  // });
+  // await createConnection()
+  await createConnection({
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    logging: false,
+    synchronize: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
+    entities: [Tweet, User],
+    ssl:true
+  });
 
   //setup server
   const app = express();
