@@ -1,12 +1,10 @@
-{
+module.exports = {
     "type": "postgres",
-    "host": "localhost",
     "port": "5432",
-    "username": "eliaswambugu",
-    "password": "postgres",
+    "host": prcess.env.DATABASE_URL,
     "database": "twittertut",
     "synchronize": true,
-    "logging": false,
+    "logging": true,
     "entities": ["dist/entities/*.js"],
     "migrations": ["dist/migrations/**/*.js"],
     "cli": {
