@@ -62,10 +62,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                     logging: false,
                     synchronize: true,
                     migrations: [path.join(__dirname, "./migrations/*")],
-                    entities: [Tweet_1["default"], User_1["default"]],
-                    extra: {
-                        ssl: true
-                    }
+                    entities: [Tweet_1["default"], User_1["default"]]
                 })];
             case 1:
                 _a.sent();
