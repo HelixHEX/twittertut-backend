@@ -33,7 +33,7 @@ const cors = require("cors");
 //server/database initialization
 const main = async () => {
   //connect to the database
-  // await createConnection()
+  await createConnection()
   // await createConnection({
   //   type: "postgres",
   //   url: process.env.DATABASE_URL,
@@ -43,17 +43,17 @@ const main = async () => {
   //   entities: [Tweet, User],
   //   extra: { ssl: true, rejectUnauthorized: false },
   // });
-  await createConnection({
-    type: 'postgres',
-    synchronize: true,
-    logging: false,
-    extra: {
-      ssl: true,
-    },
-    url: process.env.DATABASE_URL,
-    entities: [Tweet, User],
-    // entities: ['dist/entity/*.*'],
-  });
+  // await createConnection({
+  //   type: 'postgres',
+  //   synchronize: true,
+  //   logging: false,
+  //   extra: {
+  //     ssl: true,
+  //   },
+  //   url: process.env.DATABASE_URL,
+  //   entities: [Tweet, User],
+  //   // entities: ['dist/entity/*.*'],
+  // });
 
   //setup server
   const app = express();

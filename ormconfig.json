@@ -1,0 +1,14 @@
+{
+  "name": "default",
+  "type": "postgres",
+  "url": "postgres://mrlomrkobbebwl:1821600d828b9ce2922c13be3a85d43dd52087d8fd65ff40746a1d9382fa8c15@ec2-54-147-126-202.compute-1.amazonaws.com",
+  "synchronize": true,
+  "logging": true,
+  "entities": ["src/entity/*.*"],
+  "ssl": true,
+  "extra": {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  }
+}
