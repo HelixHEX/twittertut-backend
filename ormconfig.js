@@ -1,7 +1,7 @@
 module.exports = {
     "type": "postgres",
     "port": "5432",
-    "host": prcess.env.DATABASE_URL,
+    "host": process.env.DATABASE_URL,
     "database": "twittertut",
     "synchronize": true,
     "logging": true,
