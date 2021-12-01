@@ -33,7 +33,7 @@ const cors = require("cors");
 //server/database initialization
 const main = async () => {
   //connect to the database
-  await createConnection()
+  // await createConnection()
   // await createConnection({
   //   type: "postgres",
   //   url: process.env.DATABASE_URL,
@@ -43,6 +43,17 @@ const main = async () => {
   //   entities: [Tweet, User],
   //   extra: { ssl: true, rejectUnauthorized: false },
   // });
+  await createConnection({
+    type: 'postgres',
+    synchronize: true,
+    logging: false,
+    extra: {
+      ssl: true,
+    },
+    url: process.env.DATABASE_URL,
+    entities: [Tweet, User],
+    // entities: ['dist/entity/*.*'],
+  });
 
   //setup server
   const app = express();
@@ -77,7 +88,7 @@ const main = async () => {
   });
   app.use("/api/v1/user", user);
   app.use("/api/v1/tweets", tweets);
-  app.use("/api/v1/admin", admin );
+  app.use("/api/v1/admin", admin);
   app.use('/test', test);
 
   //if someome attempts to access a route that doesn't exist
