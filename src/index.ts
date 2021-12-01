@@ -41,6 +41,7 @@ const main = async () => {
     synchronize: true,
     migrations: [path.join(__dirname, "./migrations/*")],
     entities: [Tweet, User],
+    extra: { ssl: true, rejectUnauthorized: false },
   });
 
   //setup server
